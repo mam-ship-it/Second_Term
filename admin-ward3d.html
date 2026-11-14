@@ -1,0 +1,77 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مدير الجناح</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap"><style>:root{--bg:#050a16;--bg2:#0a1430;--card:rgba(16,28,56,.72);--tx:#eaf1ff;--mut:#9db0d0;--bd:rgba(150,190,255,.2);--pri:#2dd4bf;--pri2:#60a5fa;--acc:#ff8a7a;--ok:#22c55e;--bad:#ef4444;--warn:#f59e0b;--solid:#101b33}
+[data-theme=light]{--bg:#eef3fb;--bg2:#dde8f7;--card:rgba(255,255,255,.92);--tx:#0f1b33;--mut:#53627d;--bd:rgba(15,27,51,.16);--pri:#0b7a75;--pri2:#2563eb;--acc:#e5533f;--solid:#fff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{font-family:'IBM Plex Sans Arabic',Cairo,system-ui,sans-serif;background:radial-gradient(600px 400px at 12% 0,#2dd4bf2e,transparent 60%),radial-gradient(600px 420px at 92% 8%,#2563eb3d,transparent 60%),linear-gradient(var(--bg),var(--bg2));background-attachment:fixed;color:var(--tx);line-height:1.6}
+#root{max-width:920px;margin:0 auto;padding:12px 12px 30px}
+h2,h3,h4{margin:6px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;margin:8px 0;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}.col{display:flex;flex-direction:column;gap:6px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(max-width:600px){.grid3,.grid4{grid-template-columns:repeat(2,1fr)}}
+.mut{color:var(--mut);font-size:14px}
+.btn{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:12px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;transition:transform .15s,filter .15s}
+.btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.1)}.btn:disabled{opacity:.55;cursor:default}
+.btn.s{background:transparent;color:var(--tx);border:1px solid var(--bd)}.btn.s:hover:not(:disabled){border-color:var(--pri)}
+.btn.d{background:var(--bad)}.btn.sm{padding:4px 10px;font-size:13px}
+.meter{height:8px;border-radius:9px;background:var(--bd);overflow:hidden}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .2s}
+.chip{display:inline-block;padding:2px 11px;border-radius:99px;border:1px solid var(--bd);font-size:13px}
+.note{border-inline-start:4px solid var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent);padding:8px 12px;border-radius:10px;margin:8px 0;font-size:14px}
+.opt.good{border-color:var(--ok)!important;background:rgba(34,197,94,.18)!important}.opt.wrong{border-color:var(--bad)!important;background:rgba(239,68,68,.16)!important}
+.bed,.nur{cursor:pointer;transition:.15s}.bed.alert{border-color:var(--warn);box-shadow:0 0 18px -6px var(--warn)}.nur.sel{border-color:var(--pri);box-shadow:0 0 18px -4px var(--pri)}.nur.off{opacity:.4;pointer-events:none}
+canvas{max-width:100%;height:auto;border-radius:14px;border:1px solid var(--bd);background:#0a1430;display:block;margin:auto;touch-action:none}
+input[type=range]{width:100%;accent-color:var(--pri)}
+select{width:100%;padding:7px;border-radius:10px;border:1px solid var(--bd);background:var(--solid);color:var(--tx);font:inherit}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid var(--bd);padding:6px 8px;text-align:center;font-size:14px}th{background:color-mix(in srgb,var(--pri) 14%,transparent)}
+.cell{width:100%;padding:6px 0;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--tx);font:inherit;font-weight:700;cursor:pointer}
+.cell.s1{background:#2563eb55}.cell.s2{background:#f59e0b55}.cell.s3{background:#7c3aed66}
+.floor{perspective:700px;margin:6px 0}.floor>div{transform:rotateX(48deg);transform-origin:50% 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px;border-radius:14px;background:linear-gradient(#16264a,#0c1730);border:1px solid var(--bd)}
+.floor .bd{height:34px;border-radius:6px;background:var(--bd);box-shadow:0 6px 0 rgba(0,0,0,.35);transition:.3s}
+#endov{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(3,7,19,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#endov .card{width:min(420px,92vw)}
+</style></head><body><div id="root"></div><script>const Q=new URLSearchParams(location.search),EN=Q.get('lang')==='en';
+(function(){const d=document.documentElement;d.lang=EN?'en':'ar';d.dir=EN?'ltr':'rtl';if(Q.get('theme')==='light')d.dataset.theme='light'})();
+const t=(a,e)=>EN?e:a,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[Math.floor(Math.random()*a.length)],clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const SKN={kardex:['الكاردكس','Kardex'],isbar:['ISBAR','ISBAR'],shift:['تقرير الشيفت','Shift report'],assign:['التكليف','Assignment'],staff:['تنمية العاملين','Staff development'],incident:['الحوادث','Incidents'],rota:['الروتا','Rota'],problem:['حل المشكلات','Problem solving']};
+let DONE=false;
+/* يبعت النتيجة للمنصة: {modoGame, score, skills} */
+function finish(score,skills){if(DONE)return;DONE=true;score=Math.round(clamp(score,0,100000));skills=skills||{};
+ try{parent.postMessage({modoGame:GID,score:score,skills:skills},'*')}catch(e){}
+ const o=document.createElement('div');o.id='endov';
+ o.innerHTML=`<div class="card" style="text-align:center"><h2>🏁 ${t('انتهت اللعبة','Game over')}</h2><div style="font-size:44px;font-weight:800;color:var(--pri)">${score}</div><div class="mut">${t('نقطة','points')}</div>${Object.keys(skills).map(k=>`<div style="text-align:start;margin:8px 0"><div class="row sp"><span>${SKN[k]?t(SKN[k][0],SKN[k][1]):k}</span><b>${Math.round(skills[k])}%</b></div><div class="meter"><i style="width:${clamp(skills[k],0,100)}%"></i></div></div>`).join('')}<button class="btn" style="margin-top:8px" onclick="location.reload()">${t('العب مرة أخرى','Play again')}</button></div>`;
+ document.body.appendChild(o)}
+/* اختيار من متعدد (مع وقت اختياري لكل سؤال) */
+function mcq(host,title,qs,secs,done){let i=0,ok=0,tm=null,left=0;
+ const show=()=>{clearInterval(tm);if(i>=qs.length)return done(Math.round(ok*100/qs.length));
+  const q=qs[i],ord=shuf(q.o.map((_,k)=>k));
+  host.innerHTML=`<div class="card"><div class="row sp"><b>${title}</b><span class="chip">${i+1}/${qs.length}</span>${secs?`<span class="chip" id="mq">⏱ ${secs}</span>`:''}</div>${secs?`<div class="meter"><i id="mqb" style="width:100%"></i></div>`:''}<p style="font-size:17px">${t(q.a[0],q.a[1])}</p><div class="col">${ord.map(k=>`<button class="btn s opt" data-k="${k}" style="text-align:start">${t(q.o[k][0],q.o[k][1])}</button>`).join('')}</div><div id="mqf" class="mut" style="margin-top:8px;min-height:24px"></div></div>`;
+  const ans=k=>{clearInterval(tm);$$('.opt').forEach(b=>{b.disabled=true;const kk=+b.dataset.k;if(kk===q.c)b.classList.add('good');else if(kk===k)b.classList.add('wrong')});if(k===q.c)ok++;if(q.x)$('#mqf').textContent=t(q.x[0],q.x[1]);setTimeout(()=>{i++;show()},q.x?1800:900)};
+  $$('.opt').forEach(b=>b.onclick=()=>ans(+b.dataset.k));
+  if(secs){left=secs;tm=setInterval(()=>{left-=.1;const m=$('#mq');if(m)m.textContent='⏱ '+Math.max(0,Math.ceil(left));const b=$('#mqb');if(b)b.style.width=Math.max(0,left/secs*100)+'%';if(left<=0)ans(-1)},100)}};
+ show()}
+/* تسليم الشيفت ISBAR: رتّب البنود. items بالترتيب الصحيح */
+function isbarStage(host,items,done){const order=[],sh=shuf(items.map((_,i)=>i));
+ host.innerHTML=`<h3>🗣️ ${t('تسليم الشيفت بطريقة ISBAR','Shift handover with ISBAR')}</h3><p class="mut">${t('اضغط البنود بالترتيب الصحيح: تعريف ← الموقف ← الخلفية ← التقييم ← التوصية','Tap the items in the correct order: Identify → Situation → Background → Assessment → Recommendation')}</p><div id="ib" class="col"></div><div id="io" class="row" style="margin:8px 0"></div>`;
+ const draw=()=>{$('#ib').innerHTML=sh.map(i=>`<button class="btn s opt" ${order.includes(i)?'disabled':''} data-i="${i}" style="text-align:start">${t(items[i].a,items[i].e)}</button>`).join('');
+  $('#io').innerHTML=order.map((_,n)=>`<span class="chip">${n+1}</span>`).join('')+(order.length?`<button class="btn s sm" id="iu">↩ ${t('تراجع','Undo')}</button>`:'');
+  $$('#ib .opt').forEach(b=>b.onclick=()=>{order.push(+b.dataset.i);if(order.length===items.length){const ok=order.filter((v,n)=>v===n).length;done(Math.round(ok*100/items.length))}else draw()});
+  const u=$('#iu');if(u)u.onclick=()=>{order.pop();draw()}};
+ draw()}
+</script><script>const GID='adm_ward3d';let S={},tri=[],i=0,T=0;
+const TP=[{a:['شاب ألم صدر شديد وعرق وصعوبة تنفس','Young man with severe chest pain, sweating and dyspnea'],c:0},{a:['كسر بسيط في الساعد ومستقر','Simple stable forearm fracture'],c:2},{a:['طفل حرارة 39 مع قيء، واعي ويشرب','Child with 39°C fever and vomiting, alert and drinking'],c:1},{a:['مريض فاقد الوعي، لا يتنفس','Unconscious patient, not breathing'],c:0},{a:['خدش سطحي في الركبة','Superficial knee abrasion'],c:2},{a:['سيدة نزيف متوسط من جرح، ضغط طبيعي','Woman with moderate wound bleeding, normal BP'],c:1}];
+const LV=[['🔴 عاجل جدًا','🔴 Immediate','#ef4444'],['🟡 متوسط','🟡 Delayed','#f59e0b'],['🟢 بسيط','🟢 Minor','#22c55e']];
+function t1(){const R=$('#root');if(i>=TP.length){return t2()}
+ R.innerHTML=`<div class="card"><div class="row sp"><b>🧭 ${t('فرز المرضى','Patient triage')}</b><span class="chip">${i+1}/${TP.length}</span></div><div class="floor"><div>${TP.map((_,k)=>`<div class="bd" style="${k<i?'background:'+LV[tri[k]][2]:''}"></div>`).join('')}</div></div><p style="font-size:17px">${t(TP[i].a[0],TP[i].a[1])}</p><div class="col">${LV.map((l,k)=>`<button class="btn s opt" data-k="${k}" style="border-color:${l[2]}">${t(l[0],l[1])}</button>`).join('')}</div></div>`;
+ $$('.opt').forEach(b=>b.onclick=()=>{tri[i]=+b.dataset.k;i++;t1()})}
+function t2(){S.assign=tri.filter((v,k)=>v===TP[k].c).length/TP.length*100;
+ $('#root').innerHTML=`<div class="card"><h3>👥 ${t('توزيع طاقم 10 ممرضين على الشيفتات','Distribute 10 nurses across the shifts')}</h3><p class="mut">${t('حسب عبء العمل: الصباح 50% · المساء 30% · الليل 20%','By workload: Morning 50% · Evening 30% · Night 20%')}</p>${[['صباحي','Morning'],['مسائي','Evening'],['ليلي','Night']].map((s,k)=>`<div><div class="row sp"><span>${t(s[0],s[1])}</span><b id="v${k}">3</b></div><input type=range id="r${k}" min=0 max=10 value=3></div>`).join('')}<div class="chip" id="tot" style="margin:8px 0">Σ 9 / 10</div><button class="btn" id="ok2">${t('تأكيد','Confirm')}</button></div>`;
+ const up=()=>{let s=0;for(let k=0;k<3;k++){const v=+$('#r'+k).value;$('#v'+k).textContent=v;s+=v}$('#tot').textContent='Σ '+s+' / 10';return s};$$('input[type=range]').forEach(r=>r.oninput=up);
+ $('#ok2').onclick=()=>{if(up()!==10)return $('#tot').style.color='var(--bad)';const d=[5,3,2].reduce((s,x,k)=>s+Math.abs(x-(+$('#r'+k).value)),0);S.rota=clamp(100-d*14,0,100);t3()}}
+const SQ=[{a:['أنسب برنامج لتنمية الممرض الجديد:','Best development program for a new nurse:'],o:[['توجيه (Preceptorship) مع ممرض خبير','Preceptorship with an experienced nurse'],['تركه وحده','Leave him alone'],['نقله لقسم تاني','Transfer him to another unit'],['منع التدريب','Prevent training']],c:0},
+{a:['تحديد الاحتياجات التدريبية يبدأ بـ:','Training needs assessment starts with:'],o:[['تحليل فجوة الأداء والكفاءات','Analyzing performance and competency gaps'],['اختيار مكان الحفلة','Choosing a party venue'],['شراء أجهزة','Buying equipment'],['تقليل العدد','Reducing numbers']],c:0},
+{a:['أفضل وسيلة لقياس فعالية التدريب:','Best way to measure training effectiveness:'],o:[['قياس الأداء والنتائج قبل وبعد','Measure performance and outcomes before and after'],['سؤال شفهي واحد','One verbal question'],['عدد الحضور فقط','Attendance only'],['لا قياس','No evaluation']],c:0},
+{a:['التدريب أثناء العمل (On-the-job) يتميز بـ:','On-the-job training is characterized by:'],o:[['تطبيق عملي في بيئة حقيقية','Hands-on practice in a real environment'],['لا إشراف','No supervision'],['نظري فقط','Theory only'],['بدون تقييم','No assessment']],c:0}];
+function t3(){mcq($('#root'),'🎓 '+t('تنمية العاملين','Staff development'),SQ,0,p=>{S.staff=p;S.problem=(S.assign+S.rota)/2;finish(S.assign*3+S.rota*3+S.staff*3,S)})}
+t1();
+</script></body></html>

@@ -1,0 +1,90 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مختبر الأجهزة المساعدة</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap"><style>:root{--bg:#050a16;--bg2:#0a1430;--card:rgba(16,28,56,.72);--tx:#eaf1ff;--mut:#9db0d0;--bd:rgba(150,190,255,.2);--pri:#2dd4bf;--pri2:#60a5fa;--acc:#ff8a7a;--ok:#22c55e;--bad:#ef4444;--warn:#f59e0b;--solid:#101b33}
+[data-theme=light]{--bg:#eef3fb;--bg2:#dde8f7;--card:rgba(255,255,255,.92);--tx:#0f1b33;--mut:#53627d;--bd:rgba(15,27,51,.16);--pri:#0b7a75;--pri2:#2563eb;--acc:#e5533f;--solid:#fff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{font-family:'IBM Plex Sans Arabic',Cairo,system-ui,sans-serif;background:radial-gradient(600px 400px at 12% 0,#2dd4bf2e,transparent 60%),radial-gradient(600px 420px at 92% 8%,#2563eb3d,transparent 60%),linear-gradient(var(--bg),var(--bg2));background-attachment:fixed;color:var(--tx);line-height:1.6}
+#root{max-width:920px;margin:0 auto;padding:12px 12px 30px}
+h2,h3,h4{margin:6px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;margin:8px 0;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}.col{display:flex;flex-direction:column;gap:6px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(max-width:600px){.grid3,.grid4{grid-template-columns:repeat(2,1fr)}}
+.mut{color:var(--mut);font-size:14px}
+.btn{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:12px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;transition:transform .15s,filter .15s}
+.btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.1)}.btn:disabled{opacity:.55;cursor:default}
+.btn.s{background:transparent;color:var(--tx);border:1px solid var(--bd)}.btn.s:hover:not(:disabled){border-color:var(--pri)}
+.btn.d{background:var(--bad)}.btn.sm{padding:4px 10px;font-size:13px}
+.meter{height:8px;border-radius:9px;background:var(--bd);overflow:hidden}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .2s}
+.chip{display:inline-block;padding:2px 11px;border-radius:99px;border:1px solid var(--bd);font-size:13px}
+.note{border-inline-start:4px solid var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent);padding:8px 12px;border-radius:10px;margin:8px 0;font-size:14px}
+.opt.good{border-color:var(--ok)!important;background:rgba(34,197,94,.18)!important}.opt.wrong{border-color:var(--bad)!important;background:rgba(239,68,68,.16)!important}
+.bed,.nur{cursor:pointer;transition:.15s}.bed.alert{border-color:var(--warn);box-shadow:0 0 18px -6px var(--warn)}.nur.sel{border-color:var(--pri);box-shadow:0 0 18px -4px var(--pri)}.nur.off{opacity:.4;pointer-events:none}
+canvas{max-width:100%;height:auto;border-radius:14px;border:1px solid var(--bd);background:#0a1430;display:block;margin:auto;touch-action:none}
+input[type=range]{width:100%;accent-color:var(--pri)}
+select{width:100%;padding:7px;border-radius:10px;border:1px solid var(--bd);background:var(--solid);color:var(--tx);font:inherit}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid var(--bd);padding:6px 8px;text-align:center;font-size:14px}th{background:color-mix(in srgb,var(--pri) 14%,transparent)}
+.cell{width:100%;padding:6px 0;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--tx);font:inherit;font-weight:700;cursor:pointer}
+.cell.s1{background:#2563eb55}.cell.s2{background:#f59e0b55}.cell.s3{background:#7c3aed66}
+.floor{perspective:700px;margin:6px 0}.floor>div{transform:rotateX(48deg);transform-origin:50% 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px;border-radius:14px;background:linear-gradient(#16264a,#0c1730);border:1px solid var(--bd)}
+.floor .bd{height:34px;border-radius:6px;background:var(--bd);box-shadow:0 6px 0 rgba(0,0,0,.35);transition:.3s}
+#endov{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(3,7,19,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#endov .card{width:min(420px,92vw)}
+</style></head><body><div id="root"></div><script>const Q=new URLSearchParams(location.search),EN=Q.get('lang')==='en';
+(function(){const d=document.documentElement;d.lang=EN?'en':'ar';d.dir=EN?'ltr':'rtl';if(Q.get('theme')==='light')d.dataset.theme='light'})();
+const t=(a,e)=>EN?e:a,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[Math.floor(Math.random()*a.length)],clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const SKN={kardex:['الكاردكس','Kardex'],isbar:['ISBAR','ISBAR'],shift:['تقرير الشيفت','Shift report'],assign:['التكليف','Assignment'],staff:['تنمية العاملين','Staff development'],incident:['الحوادث','Incidents'],rota:['الروتا','Rota'],problem:['حل المشكلات','Problem solving']};
+let DONE=false;
+/* يبعت النتيجة للمنصة: {modoGame, score, skills} */
+function finish(score,skills){if(DONE)return;DONE=true;score=Math.round(clamp(score,0,100000));skills=skills||{};
+ try{parent.postMessage({modoGame:GID,score:score,skills:skills},'*')}catch(e){}
+ const o=document.createElement('div');o.id='endov';
+ o.innerHTML=`<div class="card" style="text-align:center"><h2>🏁 ${t('انتهت اللعبة','Game over')}</h2><div style="font-size:44px;font-weight:800;color:var(--pri)">${score}</div><div class="mut">${t('نقطة','points')}</div>${Object.keys(skills).map(k=>`<div style="text-align:start;margin:8px 0"><div class="row sp"><span>${SKN[k]?t(SKN[k][0],SKN[k][1]):k}</span><b>${Math.round(skills[k])}%</b></div><div class="meter"><i style="width:${clamp(skills[k],0,100)}%"></i></div></div>`).join('')}<button class="btn" style="margin-top:8px" onclick="location.reload()">${t('العب مرة أخرى','Play again')}</button></div>`;
+ document.body.appendChild(o)}
+/* اختيار من متعدد (مع وقت اختياري لكل سؤال) */
+function mcq(host,title,qs,secs,done){let i=0,ok=0,tm=null,left=0;
+ const show=()=>{clearInterval(tm);if(i>=qs.length)return done(Math.round(ok*100/qs.length));
+  const q=qs[i],ord=shuf(q.o.map((_,k)=>k));
+  host.innerHTML=`<div class="card"><div class="row sp"><b>${title}</b><span class="chip">${i+1}/${qs.length}</span>${secs?`<span class="chip" id="mq">⏱ ${secs}</span>`:''}</div>${secs?`<div class="meter"><i id="mqb" style="width:100%"></i></div>`:''}<p style="font-size:17px">${t(q.a[0],q.a[1])}</p><div class="col">${ord.map(k=>`<button class="btn s opt" data-k="${k}" style="text-align:start">${t(q.o[k][0],q.o[k][1])}</button>`).join('')}</div><div id="mqf" class="mut" style="margin-top:8px;min-height:24px"></div></div>`;
+  const ans=k=>{clearInterval(tm);$$('.opt').forEach(b=>{b.disabled=true;const kk=+b.dataset.k;if(kk===q.c)b.classList.add('good');else if(kk===k)b.classList.add('wrong')});if(k===q.c)ok++;if(q.x)$('#mqf').textContent=t(q.x[0],q.x[1]);setTimeout(()=>{i++;show()},q.x?1800:900)};
+  $$('.opt').forEach(b=>b.onclick=()=>ans(+b.dataset.k));
+  if(secs){left=secs;tm=setInterval(()=>{left-=.1;const m=$('#mq');if(m)m.textContent='⏱ '+Math.max(0,Math.ceil(left));const b=$('#mqb');if(b)b.style.width=Math.max(0,left/secs*100)+'%';if(left<=0)ans(-1)},100)}};
+ show()}
+/* تسليم الشيفت ISBAR: رتّب البنود. items بالترتيب الصحيح */
+function isbarStage(host,items,done){const order=[],sh=shuf(items.map((_,i)=>i));
+ host.innerHTML=`<h3>🗣️ ${t('تسليم الشيفت بطريقة ISBAR','Shift handover with ISBAR')}</h3><p class="mut">${t('اضغط البنود بالترتيب الصحيح: تعريف ← الموقف ← الخلفية ← التقييم ← التوصية','Tap the items in the correct order: Identify → Situation → Background → Assessment → Recommendation')}</p><div id="ib" class="col"></div><div id="io" class="row" style="margin:8px 0"></div>`;
+ const draw=()=>{$('#ib').innerHTML=sh.map(i=>`<button class="btn s opt" ${order.includes(i)?'disabled':''} data-i="${i}" style="text-align:start">${t(items[i].a,items[i].e)}</button>`).join('');
+  $('#io').innerHTML=order.map((_,n)=>`<span class="chip">${n+1}</span>`).join('')+(order.length?`<button class="btn s sm" id="iu">↩ ${t('تراجع','Undo')}</button>`:'');
+  $$('#ib .opt').forEach(b=>b.onclick=()=>{order.push(+b.dataset.i);if(order.length===items.length){const ok=order.filter((v,n)=>v===n).length;done(Math.round(ok*100/items.length))}else draw()});
+  const u=$('#iu');if(u)u.onclick=()=>{order.pop();draw()}};
+ draw()}
+</script><script>const GID='ger_lab3d',W=560,H=420,HT=170;let st=0,sc=0,dev='cane',phase=0,wk=0,raf=0;
+const CS=[{a:['مسن ضعيف التوازن، ضعف بسيط في جانب واحد، يقدر يتحمل وزنه كامل:','Elderly, mildly unbalanced, weak on one side, fully weight-bearing:'],o:[['عكاز','Cane'],['كرسي متحرك','Wheelchair'],['ووكر (مشاية)','Walker']],c:0},
+{a:['مريض بعد كسر الفخذ، ومحتاج ثبات كبير وما يقدرش يحمّل وزنه كامل:','After a hip fracture, needs high stability and cannot fully bear weight:'],o:[['عكاز واحد','Single cane'],['ووكر (مشاية)','Walker'],['لا شيء','Nothing']],c:1},
+{a:['شاب كسر في الساق ومحتاج يتجنب تحميل الوزن:','A young man with a leg fracture who must avoid weight-bearing:'],o:[['عكازات إبطية','Axillary crutches'],['ووكر','Walker'],['عكاز واحد','Single cane']],c:0},
+{a:['مسن وصل إنه ما بيقدرش يمشي نهائيًا:','Elderly who can no longer walk at all:'],o:[['عكاز','Cane'],['كرسي متحرك','Wheelchair'],['عكازات','Crutches']],c:1}];
+$('#root').innerHTML=`<div class="card"><div class="row sp"><b>🦯 ${t('مختبر الأجهزة المساعدة','Assistive devices lab')}</b><span class="chip" id="ph"></span></div><canvas id="cv" width="${W}" height="${H}"></canvas><div id="ct" style="margin-top:8px"></div></div>`;
+const cv=$('#cv'),g=cv.getContext('2d');
+function fig(x,gy,walk,gap){const k=2.2,hh=HT*k,sw=walk?Math.sin(wk)*.35:0;g.lineWidth=7;g.lineCap='round';
+ g.strokeStyle='#3b82f6';leg(x,gy-hh*.48,gy,sw);leg(x,gy-hh*.48,gy,-sw);
+ g.strokeStyle='#1d4ed8';g.beginPath();g.moveTo(x,gy-hh*.48);g.lineTo(x,gy-hh*.82);g.stroke();
+ g.fillStyle='#f1c7a1';g.beginPath();g.arc(x,gy-hh*.92,16,0,7);g.fill();
+ g.strokeStyle='#f1c7a1';g.lineWidth=6;g.beginPath();g.moveTo(x,gy-hh*.80);g.lineTo(x+28,gy-hh*.60);g.stroke()}
+function leg(x,hy,gy,s){g.beginPath();g.moveTo(x,hy);g.lineTo(x+Math.sin(s)*(gy-hy),gy-Math.cos(s)*6);g.stroke()}
+function scene(){g.clearRect(0,0,W,H);g.fillStyle='#0a1430';g.fillRect(0,0,W,H);const gy=H-30,k=2.2,x=190;g.fillStyle='#16264a';g.fillRect(0,gy,W,30);
+ const wo=dev==='cane'||dev==='crutch'?Math.sin(wk)*8:0;fig(x,gy,wk>0,0);
+ g.strokeStyle='#94a3b8';g.lineWidth=5;
+ if(phase===0){const h=+$('#sl').value*k;g.beginPath();g.moveTo(x+36,gy);g.lineTo(x+36,gy-h);g.lineTo(x+54,gy-h);g.stroke();g.strokeStyle='#2dd4bf';g.setLineDash([5,5]);g.lineWidth=2;g.beginPath();g.moveTo(40,gy-HT*.53*k);g.lineTo(x+110,gy-HT*.53*k);g.stroke();g.setLineDash([]);g.fillStyle='#fff';g.font='12px sans-serif';g.fillText(t('مستوى المدور الكبير','Greater trochanter'),40,gy-HT*.53*k-6)}
+ else if(phase===1){const h=+$('#sl').value*k,ax=gy-HT*.80*k;g.beginPath();g.moveTo(x+38,gy);g.lineTo(x+20,gy-h);g.stroke();g.strokeStyle='#f59e0b';g.lineWidth=2;g.beginPath();g.moveTo(40,ax);g.lineTo(x+110,ax);g.stroke();g.fillStyle='#fff';g.font='12px sans-serif';g.fillText(t('الإبط','Axilla'),40,ax-6)}
+ else if(phase===2){g.fillStyle='#fff';g.font='15px sans-serif';g.textAlign='center';g.fillText(dev==='walker'?'🚶‍♂️ walker':dev==='wheel'?'🧑‍🦽':dev==='crutch'?'crutches':'cane',x+90,60)}
+ g.textAlign='start'}
+function loopW(){wk+=.12;scene();raf=requestAnimationFrame(loopW)}
+function p0(){phase=0;$('#ph').textContent='1/3';$('#ct').innerHTML=`<p>${t('اظبط ارتفاع العكاز: المقبض لازم يكون عند مستوى المدور الكبير (ورك المريض) والكوع مثني حوالي 20–30°.','Adjust the cane: the handle should be at the level of the greater trochanter and the elbow flexed 20–30°.')}</p><div>${t('الارتفاع','Height')}: <b id="sv">80</b> cm<input id="sl" type="range" min="60" max="110" value="80"></div><div id="fb" style="min-height:24px"></div><button class="btn" id="ck">${t('تأكيد','Confirm')}</button>`;$('#sl').oninput=()=>{$('#sv').textContent=$('#sl').value;scene()};
+ $('#ck').onclick=()=>{const v=+$('#sl').value,tg=HT*.53,ok=Math.abs(v-tg)<=3;sc+=ok?250:Math.max(0,250-Math.abs(v-tg)*14);$('#fb').textContent=(ok?'✅ ':'❌ ')+t(ok?'ارتفاع صح!':'مش مظبوط. المطلوب حوالي '+Math.round(tg)+' سم','Correct!'+(ok?'':' Target about '+Math.round(tg)+' cm'));$('#ck').disabled=true;setTimeout(p1,1500)};scene()}
+function p1(){phase=1;dev='crutch';$('#ph').textContent='2/3';$('#ct').innerHTML=`<p>${t('اظبط طول العكاز الإبطي: الفرق بين الإبط وطرف الوسادة حوالي 2–3 أصابع (4–6 سم).','Adjust the axillary crutch: gap between axilla and pad about 2–3 fingers (4–6 cm).')}</p><div>${t('الطول','Length')}: <b id="sv">110</b> cm · ${t('الفرق','Gap')}: <b id="gp"></b> cm<input id="sl" type="range" min="100" max="150" value="110"></div><div id="fb" style="min-height:24px"></div><button class="btn" id="ck">${t('تأكيد','Confirm')}</button>`;const upd=()=>{const v=+$('#sl').value;$('#sv').textContent=v;$('#gp').textContent=Math.round(HT*.80-v);scene()};$('#sl').oninput=upd;upd();
+ $('#ck').onclick=()=>{const gp=HT*.80-+$('#sl').value,ok=gp>=3.5&&gp<=6.5;sc+=ok?250:Math.max(0,250-Math.abs(gp-5)*14);$('#fb').textContent=(ok?'✅ ':'❌ ')+t(ok?'مضبوط! (ممنوع الضغط على الإبط لتجنب شلل العصب)':'مش مظبوط، الفرق لازم 4–6 سم',ok?'Correct! (never lean on the axilla — nerve palsy risk)':'Not right: gap must be 4–6 cm');$('#ck').disabled=true;setTimeout(()=>{ci=0;p2()},1700)};scene()}
+let ci=0;
+function p2(){phase=2;$('#ph').textContent='3/3';if(ci>=CS.length)return finish(sc+0,{});const c=CS[ci];$('#ct').innerHTML=`<p>${t(c.a[0],c.a[1])}</p><div class="col">${c.o.map((o,i)=>`<button class="btn s opt" data-i="${i}">${t(o[0],o[1])}</button>`).join('')}</div><div id="fb" style="min-height:24px;margin-top:6px"></div>`;
+ $$('.opt').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i===c.c;$$('.opt').forEach(x=>x.disabled=true);b.classList.add(ok?'good':'wrong');if(ok){sc+=125;dev=[ 'cane','walker','crutch','wheel'][ci];if(!raf)loopW();setTimeout(()=>{cancelAnimationFrame(raf);raf=0;wk=0},2200)}$('#fb').textContent=ok?'✅':'❌';setTimeout(()=>{ci++;p2()},2400)});scene()}
+p0();
+</script></body></html>

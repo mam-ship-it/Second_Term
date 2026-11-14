@@ -1,0 +1,81 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>زحمة التطعيم</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap"><style>:root{--bg:#050a16;--bg2:#0a1430;--card:rgba(16,28,56,.72);--tx:#eaf1ff;--mut:#9db0d0;--bd:rgba(150,190,255,.2);--pri:#2dd4bf;--pri2:#60a5fa;--acc:#ff8a7a;--ok:#22c55e;--bad:#ef4444;--warn:#f59e0b;--solid:#101b33}
+[data-theme=light]{--bg:#eef3fb;--bg2:#dde8f7;--card:rgba(255,255,255,.92);--tx:#0f1b33;--mut:#53627d;--bd:rgba(15,27,51,.16);--pri:#0b7a75;--pri2:#2563eb;--acc:#e5533f;--solid:#fff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{font-family:'IBM Plex Sans Arabic',Cairo,system-ui,sans-serif;background:radial-gradient(600px 400px at 12% 0,#2dd4bf2e,transparent 60%),radial-gradient(600px 420px at 92% 8%,#2563eb3d,transparent 60%),linear-gradient(var(--bg),var(--bg2));background-attachment:fixed;color:var(--tx);line-height:1.6}
+#root{max-width:920px;margin:0 auto;padding:12px 12px 30px}
+h2,h3,h4{margin:6px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;margin:8px 0;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}.col{display:flex;flex-direction:column;gap:6px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(max-width:600px){.grid3,.grid4{grid-template-columns:repeat(2,1fr)}}
+.mut{color:var(--mut);font-size:14px}
+.btn{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:12px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;transition:transform .15s,filter .15s}
+.btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.1)}.btn:disabled{opacity:.55;cursor:default}
+.btn.s{background:transparent;color:var(--tx);border:1px solid var(--bd)}.btn.s:hover:not(:disabled){border-color:var(--pri)}
+.btn.d{background:var(--bad)}.btn.sm{padding:4px 10px;font-size:13px}
+.meter{height:8px;border-radius:9px;background:var(--bd);overflow:hidden}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .2s}
+.chip{display:inline-block;padding:2px 11px;border-radius:99px;border:1px solid var(--bd);font-size:13px}
+.note{border-inline-start:4px solid var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent);padding:8px 12px;border-radius:10px;margin:8px 0;font-size:14px}
+.opt.good{border-color:var(--ok)!important;background:rgba(34,197,94,.18)!important}.opt.wrong{border-color:var(--bad)!important;background:rgba(239,68,68,.16)!important}
+.bed,.nur{cursor:pointer;transition:.15s}.bed.alert{border-color:var(--warn);box-shadow:0 0 18px -6px var(--warn)}.nur.sel{border-color:var(--pri);box-shadow:0 0 18px -4px var(--pri)}.nur.off{opacity:.4;pointer-events:none}
+canvas{max-width:100%;height:auto;border-radius:14px;border:1px solid var(--bd);background:#0a1430;display:block;margin:auto;touch-action:none}
+input[type=range]{width:100%;accent-color:var(--pri)}
+select{width:100%;padding:7px;border-radius:10px;border:1px solid var(--bd);background:var(--solid);color:var(--tx);font:inherit}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid var(--bd);padding:6px 8px;text-align:center;font-size:14px}th{background:color-mix(in srgb,var(--pri) 14%,transparent)}
+.cell{width:100%;padding:6px 0;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--tx);font:inherit;font-weight:700;cursor:pointer}
+.cell.s1{background:#2563eb55}.cell.s2{background:#f59e0b55}.cell.s3{background:#7c3aed66}
+.floor{perspective:700px;margin:6px 0}.floor>div{transform:rotateX(48deg);transform-origin:50% 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px;border-radius:14px;background:linear-gradient(#16264a,#0c1730);border:1px solid var(--bd)}
+.floor .bd{height:34px;border-radius:6px;background:var(--bd);box-shadow:0 6px 0 rgba(0,0,0,.35);transition:.3s}
+#endov{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(3,7,19,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#endov .card{width:min(420px,92vw)}
+</style></head><body><div id="root"></div><script>const Q=new URLSearchParams(location.search),EN=Q.get('lang')==='en';
+(function(){const d=document.documentElement;d.lang=EN?'en':'ar';d.dir=EN?'ltr':'rtl';if(Q.get('theme')==='light')d.dataset.theme='light'})();
+const t=(a,e)=>EN?e:a,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[Math.floor(Math.random()*a.length)],clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const SKN={kardex:['الكاردكس','Kardex'],isbar:['ISBAR','ISBAR'],shift:['تقرير الشيفت','Shift report'],assign:['التكليف','Assignment'],staff:['تنمية العاملين','Staff development'],incident:['الحوادث','Incidents'],rota:['الروتا','Rota'],problem:['حل المشكلات','Problem solving']};
+let DONE=false;
+/* يبعت النتيجة للمنصة: {modoGame, score, skills} */
+function finish(score,skills){if(DONE)return;DONE=true;score=Math.round(clamp(score,0,100000));skills=skills||{};
+ try{parent.postMessage({modoGame:GID,score:score,skills:skills},'*')}catch(e){}
+ const o=document.createElement('div');o.id='endov';
+ o.innerHTML=`<div class="card" style="text-align:center"><h2>🏁 ${t('انتهت اللعبة','Game over')}</h2><div style="font-size:44px;font-weight:800;color:var(--pri)">${score}</div><div class="mut">${t('نقطة','points')}</div>${Object.keys(skills).map(k=>`<div style="text-align:start;margin:8px 0"><div class="row sp"><span>${SKN[k]?t(SKN[k][0],SKN[k][1]):k}</span><b>${Math.round(skills[k])}%</b></div><div class="meter"><i style="width:${clamp(skills[k],0,100)}%"></i></div></div>`).join('')}<button class="btn" style="margin-top:8px" onclick="location.reload()">${t('العب مرة أخرى','Play again')}</button></div>`;
+ document.body.appendChild(o)}
+/* اختيار من متعدد (مع وقت اختياري لكل سؤال) */
+function mcq(host,title,qs,secs,done){let i=0,ok=0,tm=null,left=0;
+ const show=()=>{clearInterval(tm);if(i>=qs.length)return done(Math.round(ok*100/qs.length));
+  const q=qs[i],ord=shuf(q.o.map((_,k)=>k));
+  host.innerHTML=`<div class="card"><div class="row sp"><b>${title}</b><span class="chip">${i+1}/${qs.length}</span>${secs?`<span class="chip" id="mq">⏱ ${secs}</span>`:''}</div>${secs?`<div class="meter"><i id="mqb" style="width:100%"></i></div>`:''}<p style="font-size:17px">${t(q.a[0],q.a[1])}</p><div class="col">${ord.map(k=>`<button class="btn s opt" data-k="${k}" style="text-align:start">${t(q.o[k][0],q.o[k][1])}</button>`).join('')}</div><div id="mqf" class="mut" style="margin-top:8px;min-height:24px"></div></div>`;
+  const ans=k=>{clearInterval(tm);$$('.opt').forEach(b=>{b.disabled=true;const kk=+b.dataset.k;if(kk===q.c)b.classList.add('good');else if(kk===k)b.classList.add('wrong')});if(k===q.c)ok++;if(q.x)$('#mqf').textContent=t(q.x[0],q.x[1]);setTimeout(()=>{i++;show()},q.x?1800:900)};
+  $$('.opt').forEach(b=>b.onclick=()=>ans(+b.dataset.k));
+  if(secs){left=secs;tm=setInterval(()=>{left-=.1;const m=$('#mq');if(m)m.textContent='⏱ '+Math.max(0,Math.ceil(left));const b=$('#mqb');if(b)b.style.width=Math.max(0,left/secs*100)+'%';if(left<=0)ans(-1)},100)}};
+ show()}
+/* تسليم الشيفت ISBAR: رتّب البنود. items بالترتيب الصحيح */
+function isbarStage(host,items,done){const order=[],sh=shuf(items.map((_,i)=>i));
+ host.innerHTML=`<h3>🗣️ ${t('تسليم الشيفت بطريقة ISBAR','Shift handover with ISBAR')}</h3><p class="mut">${t('اضغط البنود بالترتيب الصحيح: تعريف ← الموقف ← الخلفية ← التقييم ← التوصية','Tap the items in the correct order: Identify → Situation → Background → Assessment → Recommendation')}</p><div id="ib" class="col"></div><div id="io" class="row" style="margin:8px 0"></div>`;
+ const draw=()=>{$('#ib').innerHTML=sh.map(i=>`<button class="btn s opt" ${order.includes(i)?'disabled':''} data-i="${i}" style="text-align:start">${t(items[i].a,items[i].e)}</button>`).join('');
+  $('#io').innerHTML=order.map((_,n)=>`<span class="chip">${n+1}</span>`).join('')+(order.length?`<button class="btn s sm" id="iu">↩ ${t('تراجع','Undo')}</button>`:'');
+  $$('#ib .opt').forEach(b=>b.onclick=()=>{order.push(+b.dataset.i);if(order.length===items.length){const ok=order.filter((v,n)=>v===n).length;done(Math.round(ok*100/items.length))}else draw()});
+  const u=$('#iu');if(u)u.onclick=()=>{order.pop();draw()}};
+ draw()}
+</script><script>const GID='com_rush',DUR=60;
+const VX=[{k:'bcg',n:['BCG','BCG']},{k:'penta',n:['خماسي','Pentavalent']},{k:'mmr',n:['MMR','MMR']},{k:'td',n:['تيتانوس Td','Tetanus Td']},{k:'flu',n:['إنفلونزا','Influenza']}];
+const PT=[{e:'👶',n:['مولود جديد','Newborn'],v:'bcg'},{e:'🍼',n:['طفل شهرين','2-month infant'],v:'penta'},{e:'🧒',n:['طفل 12 شهر','12-month child'],v:'mmr'},{e:'🤰',n:['سيدة حامل','Pregnant woman'],v:'td'},{e:'👴',n:['مسن 65 سنة','Elderly 65 y'],v:'flu'}];
+let q=[],selV=null,T=0,tm,score=0,ok=0,bad=0,cool=20,spoil=0,react=null,nx=1;
+$('#root').innerHTML=`<div class="card"><div class="row sp"><b>💉 ${t('زحمة التطعيم','Vaccination rush')}</b><span class="chip" id="tt">⏱ ${DUR}</span><span class="chip">⭐ <b id="sc">0</b></span></div><div class="meter"><i id="tb" style="width:100%"></i></div><div id="fb" class="mut" style="min-height:24px;margin:6px 0">${t('اختار التطعيم ثم اضغط على المريض المناسب.','Pick a vaccine, then tap the matching patient.')}</div><div>🌡️ ${t('حرارة الثلاجة','Cooler temp')}<div class="meter"><i id="cb"></i></div><button class="btn s sm" id="cl" style="margin:4px 0">❄️ ${t('تبريد','Cool down')}</button></div><div class="row" id="vx" style="margin:6px 0"></div><div class="grid3" id="qq"></div></div>`;
+$('#vx').innerHTML=VX.map(v=>`<button class="btn s vb" data-k="${v.k}">💉 ${t(v.n[0],v.n[1])}</button>`).join('');
+$$('.vb').forEach(b=>b.onclick=()=>{selV=b.dataset.k;$$('.vb').forEach(x=>x.classList.toggle('good',x===b))});
+$('#cl').onclick=()=>{cool=Math.max(0,cool-45);draw()};
+function say(s){$('#fb').textContent=s}
+function draw(){$('#qq').innerHTML=q.map((p,i)=>`<div class="card bed ${p.rx?'alert':''}" data-i="${i}" style="text-align:center"><div style="font-size:30px">${p.rx?'😵':PT[p.t].e}</div><b>${t(PT[p.t].n[0],PT[p.t].n[1])}</b><div class="meter"><i style="width:${Math.max(0,100-(T-p.t0)/p.ttl*100)}%"></i></div>${p.rx?`<button class="btn d sm rb" data-i="${i}">${t('راقب 15 دقيقة','Observe 15 min')}</button>`:''}</div>`).join('');
+ $$('#qq .bed').forEach(e=>e.onclick=ev=>{if(ev.target.classList.contains('rb'))return;serve(+e.dataset.i)});$$('.rb').forEach(b=>b.onclick=ev=>{ev.stopPropagation();const p=q[+b.dataset.i];p.rx=false;p.t0=T;score+=40;say(t('✅ تصرف سليم مع رد الفعل: مراقبة 15 دقيقة ومستلقي','✅ Good response to the reaction: observe 15 min, lying down'));draw()});
+ $('#sc').textContent=Math.round(score);$('#cb').style.width=Math.min(100,cool)+'%';$('#cb').style.background=cool>75?'var(--bad)':cool>45?'var(--warn)':'var(--ok)'}
+function serve(i){const p=q[i];if(!p)return;if(p.rx)return say(t('المريض عنده رد فعل، راقبه الأول.','The patient is reacting, observe first.'));if(!selV)return say(t('اختار التطعيم الأول.','Pick a vaccine first.'));
+ if(selV===PT[p.t].v){ok++;score+=100;say(t('✅ تطعيم صح!','✅ Correct vaccine!'));if(Math.random()<.18){p.rx=true;p.t0=T;p.ttl=10;say(t('⚠️ رد فعل! راقب المريض 15 دقيقة.','⚠️ Reaction! Observe the patient for 15 minutes.'));draw();return}q.splice(i,1)}else{bad++;score-=50;say(t('❌ تطعيم غلط! ده خطر على المريض.','❌ Wrong vaccine! Dangerous for the patient.'));q.splice(i,1)}draw()}
+function tick(){T+=.1;cool+=1.6*.1*1.2;if(cool>=100){cool=40;spoil++;score-=60;say(t('🌡️ التطعيمات اتلفت من الحرارة! -60','🌡️ Vaccines spoiled by heat! -60'))}
+ if(T>=nx&&q.length<6){nx=T+rnd(18,30)/10;q.push({t:rnd(0,PT.length-1),t0:T,ttl:rnd(9,13)})}
+ q=q.filter(p=>{if(T-p.t0>=p.ttl){if(!p.rx){score-=30;bad++}return false}return true});
+ $('#tt').textContent='⏱ '+Math.max(0,Math.ceil(DUR-T));$('#tb').style.width=Math.max(0,(DUR-T)/DUR*100)+'%';draw();
+ if(T>=DUR){clearInterval(tm);finish(Math.max(0,score*1.5),{})}}
+draw();tm=setInterval(tick,100);
+</script></body></html>
